@@ -1,0 +1,6 @@
+git+https://github.com/huggingface/diffusers.git
+sentencepiece
+accelerate
+transformers
+huggingface_hub
+mediapy
