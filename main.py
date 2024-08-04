@@ -18,6 +18,14 @@ def setup_pipeline_and_widgets():
     def set_generator(random, seed_value):
         return torch.Generator("cpu").manual_seed(0) if random else torch.Generator("cpu").manual_seed(seed_value)
 
+
+    html_widget = widgets.HTML(
+    value=(
+        "<i>Made by <a href='https://www.youtube.com/@marat_ai' target='_blank'>marat_ai</a>, "
+        "<a href='https://www.patreon.com/marat_ai' target='_blank'>more_notebooks</a></i>"
+    ),
+    placeholder='Some HTML')
+
     # Define the prompt textarea
     prompt = widgets.Textarea(
         value='a cat',
@@ -117,5 +125,5 @@ def setup_pipeline_and_widgets():
     generate_button.on_click(generate_image)
 
     # Display the widgets and output
-    display(prompt, num_inference_steps, width, height, seed, random_seed, generate_button, output)
+    display(html_widget, prompt, num_inference_steps, width, height, seed, random_seed, generate_button, output)
 
