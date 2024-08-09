@@ -1,6 +1,7 @@
 import torch
 import accelerate
 import sentencepiece
+import uuid
 from diffusers import FluxPipeline
 import ipywidgets as widgets
 from IPython.display import display, clear_output
@@ -71,6 +72,15 @@ def setup_pipeline_and_widgets():
         description='Steps',
         disabled=False
     )
+    
+    guidance_scale = widgets.IntText(
+        value=0.0,
+        min=0,
+        max=10,
+        step=0.5,
+        description='SFG scale',
+        disabled=False
+    )
 
     # Define the seed input
     seed = widgets.IntText(
@@ -110,12 +120,13 @@ def setup_pipeline_and_widgets():
             image = pipe(
                 prompt=prompt.value, 
                 num_inference_steps=num_inference_steps.value, 
-                guidance_scale=0.0, 
+                guidance_scale=guidance_scale.value, 
                 generator=generator,
                 width=width.value, 
                 height=height.value
             ).images[0]
-            image.save(f"{prompt.value}_{seed.value}.png")
+            uid = uuid.uuid4()
+            image.save(f"{uid}.png")
 
             plt.imshow(image)
             plt.axis('off')
@@ -125,5 +136,5 @@ def setup_pipeline_and_widgets():
     generate_button.on_click(generate_image)
 
     # Display the widgets and output
-    display(html_widget, prompt, num_inference_steps, width, height, seed, random_seed, generate_button, output)
+    display(html_widget, prompt, num_inference_steps, guidance_scale, width, height, seed, random_seed, generate_button, output)
 
