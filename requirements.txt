@@ -4,3 +4,4 @@ accelerate
 transformers
 huggingface_hub
 mediapy
+uuid
